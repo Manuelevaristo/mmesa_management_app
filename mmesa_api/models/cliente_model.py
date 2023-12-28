@@ -6,7 +6,7 @@ class Cliente(db.Model):
 
     id = db.Column(db.Integer, primary_key=True,
                    autoincrement=True, nullable=False)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String(100), unique=True, nullable=False)
     cell_contact = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     street_address = db.Column(db.String(100), unique=False, nullable=False)
