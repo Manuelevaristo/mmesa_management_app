@@ -13,8 +13,8 @@ ma = Marshmallow(app)
 migrate = Migrate(app, db)
 api = Api(app)
 
-from mmesa_api.views import cliente_views, tipo_equipamento_views
-from mmesa_api.models import cliente_model, tipo_equipamento_model
+from mmesa_api.views import cliente_views, tipo_equipamento_views, equipamento_views
+from mmesa_api.models import cliente_model, tipo_equipamento_model, equipamento_model
 
 
 if __name__=="__main__":
