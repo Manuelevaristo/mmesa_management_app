@@ -4,14 +4,18 @@ from ..schemas import cliente_schema
 from flask import request, make_response, jsonify
 from ..entities import cliente
 from ..services import cliente_service
+from flask_jwt_extended import jwt_required
 
 
 class ClienteList(Resource):
+
+    @jwt_required()
     def get(self):
         clientes = cliente_service.listar_clientes()
         cl = cliente_schema.ClienteSchema(many=True)
         return make_response(cl.jsonify(clientes), 200)
 
+    @jwt_required()
     def post(self):
         cl = cliente_schema.ClienteSchema()
         validate = cl.validate(request.json)
@@ -34,6 +38,8 @@ class ClienteList(Resource):
 
 
 class ClienteDetail(Resource):
+
+    @jwt_required()
     def get(self, id):
         cliente = cliente_service.listar_clientesById(id)
         if cliente is None:
@@ -42,6 +48,7 @@ class ClienteDetail(Resource):
         cl = cliente_schema.ClienteSchema()
         return make_response(cl.jsonify(cliente), 200)
 
+    @jwt_required()
     def put(self, id):
         cliente_bd = cliente_service.listar_clientesById(id)
         if cliente_bd is None:
@@ -63,6 +70,7 @@ class ClienteDetail(Resource):
             cliente_atualizado = cliente_service.listar_clientesById(id)
             return make_response(cl.jsonify(cliente_atualizado), 200)
 
+    @jwt_required()
     def delete(self, id):
         cliente_bd = cliente_service.listar_clientesById(id)
         if cliente_bd is None:

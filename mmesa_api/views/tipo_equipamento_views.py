@@ -4,14 +4,18 @@ from ..schemas import tipo_equipamento_schema
 from flask import request, make_response, jsonify
 from ..entities import tipo_equipamento
 from ..services import tipo_equipamento_service
+from flask_jwt_extended import jwt_required
 
 
 class Tipo_equipamentoList(Resource):
+    
+    @jwt_required()
     def get(self):
         tipo_equipamentos = tipo_equipamento_service.listar_tipo_equipamentos()
         te = tipo_equipamento_schema.Tipo_equipamentoSchema(many=True)
         return make_response(te.jsonify(tipo_equipamentos), 200)
 
+    @jwt_required()
     def post(self):
         te = tipo_equipamento_schema.Tipo_equipamentoSchema()
         validate = te.validate(request.json)
@@ -31,6 +35,8 @@ class Tipo_equipamentoList(Resource):
 
 
 class Tipo_equipamentoDetail(Resource):
+
+    @jwt_required()
     def get(self, id):
         tipo_equipamento = tipo_equipamento_service.listar_tipo_equipamentosById(
             id)
@@ -40,6 +46,7 @@ class Tipo_equipamentoDetail(Resource):
         te = tipo_equipamento_schema.Tipo_equipamentoSchema()
         return make_response(te.jsonify(tipo_equipamento), 200)
 
+    @jwt_required()
     def put(self, id):
         tipo_equipamento_bd = tipo_equipamento_service.listar_tipo_equipamentosById(
             id)
@@ -61,6 +68,7 @@ class Tipo_equipamentoDetail(Resource):
                 id)
             return make_response(te.jsonify(tipo_equipamento_atualizado), 200)
 
+    @jwt_required()
     def delete(self, id):
         tipo_equipamento_bd = tipo_equipamento_service.listar_tipo_equipamentosById(
             id)
