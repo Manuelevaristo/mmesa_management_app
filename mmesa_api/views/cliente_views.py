@@ -5,6 +5,7 @@ from flask import request, make_response, jsonify
 from ..entities import cliente
 from ..services import cliente_service
 from flask_jwt_extended import jwt_required
+from ..decorater import admin_requered
 
 
 class ClienteList(Resource):
@@ -15,7 +16,7 @@ class ClienteList(Resource):
         cl = cliente_schema.ClienteSchema(many=True)
         return make_response(cl.jsonify(clientes), 200)
 
-    @jwt_required()
+    @admin_requered
     def post(self):
         cl = cliente_schema.ClienteSchema()
         validate = cl.validate(request.json)
@@ -48,7 +49,7 @@ class ClienteDetail(Resource):
         cl = cliente_schema.ClienteSchema()
         return make_response(cl.jsonify(cliente), 200)
 
-    @jwt_required()
+    @admin_requered
     def put(self, id):
         cliente_bd = cliente_service.listar_clientesById(id)
         if cliente_bd is None:
@@ -70,7 +71,7 @@ class ClienteDetail(Resource):
             cliente_atualizado = cliente_service.listar_clientesById(id)
             return make_response(cl.jsonify(cliente_atualizado), 200)
 
-    @jwt_required()
+    @admin_requered
     def delete(self, id):
         cliente_bd = cliente_service.listar_clientesById(id)
         if cliente_bd is None:

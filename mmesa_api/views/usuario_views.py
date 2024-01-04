@@ -17,9 +17,11 @@ class UsuarioList(Resource):
             name = request.json["name"]
             email = request.json["email"]
             senha = request.json["senha"]
+            is_admin = request.json["is_admin"]
+
 
             novo_usuario = usuario.Usuario(
-                name=name, email=email, senha=senha)
+                name=name, email=email, senha=senha, is_admin=is_admin)
             resultado = usuario_service.cadastrar_usuario(novo_usuario)
 
             x = us.jsonify(resultado)

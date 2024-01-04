@@ -10,6 +10,7 @@ class Usuario(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     senha = db.Column(db.String(255), unique=True, nullable=False)
+    is_admin = db.Column(db.Boolean)
 
     def encriptar_senha(self):
         self.senha = pbkdf2_sha256.hash(self.senha)

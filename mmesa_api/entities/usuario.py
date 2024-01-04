@@ -1,8 +1,9 @@
 class Usuario():
-    def __init__(self, name, email, senha):
+    def __init__(self, name, email, senha, is_admin):
         self.name = name
         self.email = email
         self.senha = senha
+        self.is_admin = is_admin
 
 
         @property
@@ -28,3 +29,11 @@ class Usuario():
         @senha.setter
         def senha(self, senha):
             self.__senha = senha
+        
+        @property
+        def is_admin(self):
+            return self.__is_admin
+
+        @is_admin.setter
+        def is_admin(self, is_admin):
+            self.__is_admin = is_admin

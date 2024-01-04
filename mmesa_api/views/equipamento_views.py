@@ -5,7 +5,7 @@ from flask import request, make_response, jsonify
 from ..entities import equipamento
 from ..services import equipamento_service, cliente_service, tipo_equipamento_service
 from flask_jwt_extended import jwt_required
-
+from ..decorater import admin_requered
 
 class EquipamentoList(Resource):
 
@@ -15,8 +15,9 @@ class EquipamentoList(Resource):
         eq = equipamento_schema.EquipamentoSchema(many=True)
         return make_response(eq.jsonify(equipamentos), 200)
     
-    @jwt_required()
+    @admin_requered
     def post(self):
+       
         eq = equipamento_schema.EquipamentoSchema()
         validate = eq.validate(request.json)
         if validate:
@@ -59,7 +60,7 @@ class EquipamentoDetail(Resource):
         eq = equipamento_schema.EquipamentoSchema()
         return make_response(eq.jsonify(equipamento), 200)
     
-    @jwt_required()
+    @admin_requered
     def put(self, id):
         equipamento_bd = equipamento_service.listar_equipamentosById(id)
         if equipamento_bd is None:
@@ -95,7 +96,7 @@ class EquipamentoDetail(Resource):
                 id)
             return make_response(eq.jsonify(equipamento_atualizado), 200)
         
-    @jwt_required()
+    @admin_requered
     def delete(self, id):
         equipamento_bd = equipamento_service.listar_equipamentosById(id)
         if equipamento_bd is None:
